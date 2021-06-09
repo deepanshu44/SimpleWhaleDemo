@@ -37,8 +37,10 @@ jobs:
       with:
         context: ./
         file: ./Dockerfile
+        builder: ${{ steps.buildx.outputs.name }}
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:latest
+        tags:  ${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:latest
+        cache-from: type=local,src=/tmp/.buildx-cache
 
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
